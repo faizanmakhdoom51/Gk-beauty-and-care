@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GK Beauty and Care | Premium Cosmetics & Skincare</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Announcement Bar -->
+  <div class="announcement-bar">
+    <span>✨ Free shipping on orders over $50 | Express Global Delivery ✨</span>
+  </div>
+
+  <!-- Header / Navigation -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="#" class="brand-logo">
+        <span class="logo-text">GK</span>
+        <span class="logo-sub">Beauty & Care</span>
+      </a>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="#hero">Home</a>
+        <a href="#categories">Categories</a>
+        <a href="#products">Shop All</a>
+        <a href="#about">About Us</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="icon-btn search-trigger" id="searchBtn" aria-label="Search">
+          🔍
+        </button>
+        <button class="icon-btn cart-trigger" id="cartBtn" aria-label="Cart">
+          🛍️ <span class="cart-badge" id="cartCount">0</span>
+        </button>
+        <button class="mobile-toggle" id="mobileMenuBtn" aria-label="Toggle menu">
+          ☰
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero" id="hero">
+    <div class="hero-content">
+      <span class="hero-tag">Pure & Organic Botanicals</span>
+      <h1>Radiance Crafted By Nature</h1>
+      <p>Discover luxury cosmetics, restorative skincare, and essential beauty routines designed for every unique skin profile.</p>
+      <div class="hero-buttons">
+        <a href="#products" class="btn btn-primary">Explore Products</a>
+        <a href="#categories" class="btn btn-secondary">Browse Categories</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories Section -->
+  <section class="categories-section" id="categories">
+    <div class="container">
+      <div class="section-title">
+        <span>Curated Collections</span>
+        <h2>Shop By Category</h2>
+      </div>
+
+      <div class="categories-grid">
+        <div class="category-card" onclick="filterCategory('Skincare')">
+          <div class="category-icon">🌿</div>
+          <h3>Skincare</h3>
+          <p>Serums, cleansers & moisturizers</p>
+        </div>
+        <div class="category-card" onclick="filterCategory('Cosmetics')">
+          <div class="category-icon">💄</div>
+          <h3>Cosmetics</h3>
+          <p>Lipsticks, foundations & blushes</p>
+        </div>
+        <div class="category-card" onclick="filterCategory('Haircare')">
+          <div class="category-icon">✨</div>
+          <h3>Haircare</h3>
+          <p>Nourishing oils & revitalizing masks</p>
+        </div>
+        <div class="category-card" onclick="filterCategory('Body Care')">
+          <div class="category-icon">🧴</div>
+          <h3>Body Care</h3>
+          <p>Luxury lotions & organic scrubs</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Products Section -->
+  <section class="products-section" id="products">
+    <div class="container">
+      <div class="section-title">
+        <span>Exclusive Essentials</span>
+        <h2>Our Featured Products</h2>
+      </div>
+
+      <!-- Filters & Search Bar -->
+      <div class="filter-controls">
+        <div class="search-box">
+          <input type="text" id="searchInput" placeholder="Search products..." onkeyup="filterProducts()" />
+        </div>
+        <div class="category-buttons">
+          <button class="filter-btn active" onclick="filterCategory('all', this)">All</button>
+          <button class="filter-btn" onclick="filterCategory('Skincare', this)">Skincare</button>
+          <button class="filter-btn" onclick="filterCategory('Cosmetics', this)">Cosmetics</button>
+          <button class="filter-btn" onclick="filterCategory('Haircare', this)">Haircare</button>
+          <button class="filter-btn" onclick="filterCategory('Body Care', this)">Body Care</button>
+        </div>
+      </div>
+
+      <!-- Dynamic Product List Container -->
+      <div class="products-grid" id="productsGrid">
+        <!-- Javascript will generate product cards here -->
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="about-section" id="about">
+    <div class="container about-container">
+      <div class="about-text">
+        <span class="hero-tag">About GK Beauty and Care</span>
+        <h2>Pure Ingredients, Timeless Confidence</h2>
+        <p>At GK Beauty and Care, we believe that true beauty begins with thoughtful, nourishing self-care. Our formulations combine natural botanicals with dermatological expertise to provide gentle yet powerful results.</p>
+        <ul class="about-features">
+          <li>✨ 100% Cruelty-Free & Ethical Sourcing</li>
+          <li>🌱 Paraben, Sulfate & Toxin Free</li>
+          <li>🔬 Dermatologically Tested Solutions</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Shopping Cart Modal -->
+  <div class="modal-overlay" id="cartModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Your Shopping Bag</h3>
+        <button class="close-btn" id="closeCart">&times;</button>
+      </div>
+      <div class="modal-body" id="cartItems">
+        <p class="empty-cart-msg">Your bag is currently empty.</p>
+      </div>
+      <div class="modal-footer">
+        <div class="cart-total-row">
+          <span>Total:</span>
+          <strong id="cartTotal">$0.00</strong>
+        </div>
+        <button class="btn btn-primary btn-block" onclick="checkout()">Proceed to Checkout</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer" id="contact">
+    <div class="container footer-grid">
+      <div class="footer-col">
+        <a href="#" class="brand-logo">
+          <span class="logo-text">GK</span>
+          <span class="logo-sub">Beauty & Care</span>
+        </a>
+        <p>Your ultimate destination for luxury botanical skincare, organic cosmetics, and self-care essentials.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#categories">Categories</a></li>
+          <li><a href="#products">Shop All</a></li>
+          <li><a href="#about">About Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Customer Care</h4>
+        <ul>
+          <li><a href="#">Shipping & Returns</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Get In Touch</h4>
+        <p>Email: support@gkbeautyandcare.com</p>
+        <p>Location: Beauty Avenue, Care City</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 GK Beauty and Care. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
