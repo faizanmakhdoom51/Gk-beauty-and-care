@@ -11,12 +11,10 @@
 </head>
 <body>
 
-  <!-- Announcement Bar -->
   <div class="announcement-bar">
     <span>✨ Free shipping on orders over $50 | Express Global Delivery ✨</span>
   </div>
 
-  <!-- Header / Navigation -->
   <header class="navbar">
     <div class="nav-container">
       <a href="#" class="brand-logo">
@@ -33,20 +31,13 @@
       </nav>
 
       <div class="nav-actions">
-        <button class="icon-btn search-trigger" id="searchBtn" aria-label="Search">
-          🔍
-        </button>
-        <button class="icon-btn cart-trigger" id="cartBtn" aria-label="Cart">
-          🛍️ <span class="cart-badge" id="cartCount">0</span>
-        </button>
-        <button class="mobile-toggle" id="mobileMenuBtn" aria-label="Toggle menu">
-          ☰
-        </button>
+        <button class="icon-btn search-trigger" id="searchBtn" aria-label="Search">🔍</button>
+        <button class="icon-btn cart-trigger" id="cartBtn" aria-label="Cart">🛍️ <span class="cart-badge" id="cartCount">0</span></button>
+        <button class="mobile-toggle" id="mobileMenuBtn" aria-label="Toggle menu">☰</button>
       </div>
     </div>
   </header>
 
-  <!-- Hero Section -->
   <section class="hero" id="hero">
     <div class="hero-content">
       <span class="hero-tag">Pure & Organic Botanicals</span>
@@ -59,7 +50,6 @@
     </div>
   </section>
 
-  <!-- Categories Section -->
   <section class="categories-section" id="categories">
     <div class="container">
       <div class="section-title">
@@ -92,7 +82,6 @@
     </div>
   </section>
 
-  <!-- Products Section -->
   <section class="products-section" id="products">
     <div class="container">
       <div class="section-title">
@@ -100,7 +89,6 @@
         <h2>Our Featured Products</h2>
       </div>
 
-      <!-- Filters & Search Bar -->
       <div class="filter-controls">
         <div class="search-box">
           <input type="text" id="searchInput" placeholder="Search products..." onkeyup="filterProducts()" />
@@ -114,14 +102,10 @@
         </div>
       </div>
 
-      <!-- Dynamic Product List Container -->
-      <div class="products-grid" id="productsGrid">
-        <!-- Javascript will generate product cards here -->
-      </div>
+      <div class="products-grid" id="productsGrid"></div>
     </div>
   </section>
 
-  <!-- About Section -->
   <section class="about-section" id="about">
     <div class="container about-container">
       <div class="about-text">
@@ -137,7 +121,6 @@
     </div>
   </section>
 
-  <!-- Shopping Cart Modal -->
   <div class="modal-overlay" id="cartModal">
     <div class="modal-card">
       <div class="modal-header">
@@ -157,7 +140,6 @@
     </div>
   </div>
 
-  <!-- Footer -->
   <footer class="footer" id="contact">
     <div class="container footer-grid">
       <div class="footer-col">
