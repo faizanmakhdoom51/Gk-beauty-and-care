@@ -1,1 +1,24 @@
-
+{
+  "items": [
+    {
+      "id": 1,
+      "name": "Radiance Vitamin C Serum",
+      "category": "Skincare",
+      "price": 38.00,
+      "currency": "$",
+      "image": "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=500&auto=format&fit=crop&q=60",
+      "inStock": true,
+      "description": "Brightens and evens skin tone with organic botanicals."
+    },
+    {
+      "id": 2,
+      "name": "Velvet Matte Lipstick",
+      "category": "Cosmetics",
+      "price": 24.50,
+      "currency": "$",
+      "image": "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=500&auto=format&fit=crop&q=60",
+      "inStock": true,
+      "description": "Long-lasting hydration with richly pigmented botanical oils."
+    }
+  ]
+}
