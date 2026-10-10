@@ -1,62 +1,7 @@
-// ============================================================
-// EDIT YOUR PRODUCTS & PRICES HERE
-// ============================================================
-const products = [
-  {
-    id: 1,
-    name: "Radiance Vitamin C Serum",
-    category: "Skincare",
-    price: 38.00, // <-- Edit price here
-    currency: "$",
-    description: "Brightens and evens skin tone with organic botanicals."
-  },
-  {
-    id: 2,
-    name: "Velvet Matte Lipstick",
-    category: "Cosmetics",
-    price: 24.50, // <-- Edit price here
-    currency: "$",
-    description: "Long-lasting hydration with richly pigmented botanical oils."
-  },
-  {
-    id: 3,
-    name: "Nourishing Argan Hair Oil",
-    category: "Haircare",
-    price: 32.00, // <-- Edit price here
-    currency: "$",
-    description: "Restores shine, eliminates frizz, and protects hair."
-  },
-  {
-    id: 4,
-    name: "Hydrating Rose Facial Mist",
-    category: "Skincare",
-    price: 22.00, // <-- Edit price here
-    currency: "$",
-    description: "Instant hydration refresh made with pure organic rosewater."
-  },
-  {
-    id: 5,
-    name: "Botanical Body Exfoliator",
-    category: "Body Care",
-    price: 28.50, // <-- Edit price here
-    currency: "$",
-    description: "Gently removes dead skin cells using natural sea salts."
-  },
-  {
-    id: 6,
-    name: "Glowing Silk Foundation",
-    category: "Cosmetics",
-    price: 42.00, // <-- Edit price here
-    currency: "$",
-    description: "Lightweight coverage for a naturally radiant complexation."
-  }
-];
-
-// Shopping Cart State
+let products = [];
 let cart = [];
 let selectedCategory = "all";
 
-// DOM Elements
 const productsGrid = document.getElementById("productsGrid");
 const cartBtn = document.getElementById("cartBtn");
 const cartModal = document.getElementById("cartModal");
@@ -67,67 +12,73 @@ const cartTotalElement = document.getElementById("cartTotal");
 const mobileMenuBtn = document.getElementById("mobileMenuBtn");
 const navLinks = document.getElementById("navLinks");
 
-// Initialize Page
-document.addEventListener("DOMContentLoaded", () => {
-  renderProducts(products);
+document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    const response = await fetch('products.json');
+    const data = await response.json();
+    products = data.items || [];
+    renderProducts(products);
+  } catch (error) {
+    console.error("Error loading products:", error);
+    productsGrid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #888;">Failed to load products.</p>`;
+  }
 });
 
-// Render Products to Grid
 function renderProducts(productList) {
   productsGrid.innerHTML = "";
-
-  if (productList.length === 0) {
-    productsGrid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #888;">No products found in this category.</p>`;
+  if (!productList || productList.length === 0) {
+    productsGrid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #888;">No products found.</p>`;
     return;
   }
 
   productList.forEach((product) => {
     const card = document.createElement("div");
     card.className = "product-card";
+    
+    let actionButtonHTML = product.inStock 
+      ? `<button class="add-cart-btn" onclick="addToCart(${product.id})">Add to Bag</button>`
+      : `<span class="sold-badge">Sold Out</span>`;
+
     card.innerHTML = `
       <div>
+        <div class="product-img-container">
+          <img src="${product.image}" alt="${product.name}" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=500&auto=format&fit=crop&q=60'">
+        </div>
         <div class="product-badge">${product.category}</div>
         <h3>${product.name}</h3>
         <p>${product.description}</p>
       </div>
       <div class="product-bottom">
-        <span class="product-price">${product.currency}${product.price.toFixed(2)}</span>
-        <button class="add-cart-btn" onclick="addToCart(${product.id})">Add to Bag</button>
+        <span class="product-price">${product.currency}${Number(product.price).toFixed(2)}</span>
+        ${actionButtonHTML}
       </div>
     `;
     productsGrid.appendChild(card);
   });
 }
 
-// Filter by Category
 function filterCategory(category, buttonElement) {
   selectedCategory = category;
-
   if (buttonElement) {
     document.querySelectorAll(".filter-btn").forEach((btn) => btn.classList.remove("active"));
     buttonElement.classList.add("active");
   }
-
   filterProducts();
 }
 
-// Filter by Search Query & Category
 function filterProducts() {
   const searchQuery = document.getElementById("searchInput").value.toLowerCase();
-
   const filtered = products.filter((product) => {
     const matchesCategory = selectedCategory === "all" || product.category === selectedCategory;
     const matchesSearch = product.name.toLowerCase().includes(searchQuery) || product.description.toLowerCase().includes(searchQuery);
     return matchesCategory && matchesSearch;
   });
-
   renderProducts(filtered);
 }
 
-// Cart Functions
 function addToCart(productId) {
   const item = products.find((p) => p.id === productId);
-  if (item) {
+  if (item && item.inStock) {
     cart.push(item);
     updateCartUI();
   }
@@ -135,7 +86,6 @@ function addToCart(productId) {
 
 function updateCartUI() {
   cartCount.textContent = cart.length;
-
   if (cart.length === 0) {
     cartItemsContainer.innerHTML = `<p class="empty-cart-msg">Your bag is currently empty.</p>`;
     cartTotalElement.textContent = "$0.00";
@@ -146,13 +96,13 @@ function updateCartUI() {
   let total = 0;
 
   cart.forEach((item, index) => {
-    total += item.price;
+    total += Number(item.price);
     const cartItem = document.createElement("div");
     cartItem.className = "cart-item";
     cartItem.innerHTML = `
       <div class="cart-item-info">
         <h4>${item.name}</h4>
-        <p>${item.currency}${item.price.toFixed(2)}</p>
+        <p>${item.currency}${Number(item.price).toFixed(2)}</p>
       </div>
       <button onclick="removeFromCart(${index})" style="background:none; border:none; color:red; cursor:pointer;">&times;</button>
     `;
@@ -178,10 +128,6 @@ function checkout() {
   cartModal.classList.remove("active");
 }
 
-// Modal & Navigation Handlers
 cartBtn.addEventListener("click", () => cartModal.classList.add("active"));
 closeCart.addEventListener("click", () => cartModal.classList.remove("active"));
-
-mobileMenuBtn.addEventListener("click", () => {
-  navLinks.classList.toggle("active");
-});
+mobileMenuBtn.addEventListener("click", () => navLinks.classList.toggle("active"));
