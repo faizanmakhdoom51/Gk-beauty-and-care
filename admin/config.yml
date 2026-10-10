@@ -1,1 +1,28 @@
+backend:
+  name: github
+  repo: faizanmakhdoom51/Gk-beauty-and-care
+  branch: main
 
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "shop"
+    label: "Shop Management"
+    files:
+      - file: "products.json"
+        label: "Product Catalog"
+        name: "products"
+        fields:
+          - label: "Products List"
+            name: "items"
+            type: list
+            fields:
+              - {label: "ID", name: "id", type: "number"}
+              - {label: "Product Name", name: "name", type: "string"}
+              - {label: "Category", name: "category", widget: "select", options: ["Skincare", "Cosmetics", "Haircare", "Body Care"]}
+              - {label: "Price ($)", name: "price", type: "number", value_type: "float"}
+              - {label: "Currency", name: "currency", type: "string", default: "$"}
+              - {label: "Product Picture", name: "image", widget: "image"}
+              - {label: "In Stock (Uncheck if Sold Out)", name: "inStock", widget: "boolean", default: true}
+              - {label: "Description", name: "description", type: "text"}
